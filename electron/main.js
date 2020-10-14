@@ -1,9 +1,16 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
+const fs = require("fs");
 const { channels } = require("../src/shared/constants");
 const path = require("path");
 const url = require("url");
 
 let mainWindow;
+
+let rawdata = fs.readFileSync(
+  path.resolve(__dirname, "../extraResources/config.json")
+);
+let config = JSON.parse(rawdata);
+console.log("======>>>", config);
 
 function createWindow() {
   const startUrl =
@@ -44,5 +51,6 @@ ipcMain.on(channels.APP_INFO, (event) => {
   event.sender.send(channels.APP_INFO, {
     appName: app.getName(),
     appVersion: app.getVersion(),
+    aaa: config,
   });
 });
