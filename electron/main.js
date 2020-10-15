@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require("electron");
+const { electron, app, BrowserWindow, ipcMain } = require("electron");
 const fs = require("fs");
 const { channels } = require("../src/shared/constants");
 const path = require("path");
@@ -6,11 +6,18 @@ const url = require("url");
 
 let mainWindow;
 
+// let rawdata = fs.readFileSync(
+//   path.resolve(__dirname, "../extraResources/config.json")
+// );
+
 let rawdata = fs.readFileSync(
-  path.resolve(__dirname, "../extraResources/config.json")
+  path.resolve(app.getPath("exe"), "../resources/extraResources/config.json")
 );
+
 let config = JSON.parse(rawdata);
+
 console.log("======>>>", config);
+// const config = (app.getPath("exe"), "../resources/extraResources");
 
 function createWindow() {
   const startUrl =
